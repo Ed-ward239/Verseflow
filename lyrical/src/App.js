@@ -7,6 +7,7 @@ import Privacy from './components/MenuPages/Privacy';
 import TnS from './components/MenuPages/TnS';
 import CntSpotify from './components/MenuPages/connectSpotify';
 import SearchPage from './components/SearchPageComponents/SearchPage';
+import Callback from './components/Callback';
 
 function App() {
  
@@ -20,6 +21,7 @@ function App() {
             <Route path="/TnS" element={<TnS/>}/>
             <Route path="/connectSpotify" element={<CntSpotify/>}/>
             <Route path="/SearchPage" element={<SearchPage />} />
+            <Route path="/callback" element={<Callback />} />
         </Routes>
       </div>
        

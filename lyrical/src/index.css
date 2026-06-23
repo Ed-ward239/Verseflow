@@ -1,20 +1,26 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Global app styling that used to live in MainBody.css / About.css.
+   The app sits on a black tsParticles canvas, so default text is white
+   and Roboto Mono is the app-wide font. */
+@layer base {
+  html {
+    font-family: 'Roboto Mono', monospace;
+    color: #fff;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  /* hide scrollbar (was `body::-webkit-scrollbar { display:none }`) */
+  body::-webkit-scrollbar {
+    display: none;
+  }
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
-
-:root{
-    --color-cursor: 220, 90, 90;
-      --cursor-outline-shade: 0.3;
-      --cursor-size: 10px;
-      --cursor-outline-size: 12px;
+/* Typewriter cursor stays invisible (was a global rule in MainBody.css). */
+.Typewriter__cursor {
+  color: transparent;
 }
