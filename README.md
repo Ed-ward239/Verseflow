@@ -49,9 +49,11 @@ the music over generative graphics. Connect your Spotify account, search for a t
 | Lyrics            | [LRCLIB](https://lrclib.net) — free, no API key, time-stamped LRC       |
 | Background        | [react-tsparticles](https://github.com/tsparticles/react)              |
 
-> **Notes:** Lyrics come from LRCLIB (free, key-less synced lyrics), not MusixMatch. Full-song
+> **Notes:** Lyrics come from LRCLIB (free, key-less synced lyrics). Full-song
 > playback uses the Web Playback SDK and **requires a Spotify Premium account**; free accounts
-> fall back to 30-second iTunes previews.
+> fall back to 30-second iTunes previews. Because the Spotify app runs in **Development Mode**,
+> only up to **25 manually allow-listed Spotify accounts** can connect — see
+> [Spotify Development Mode](#️-spotify-development-mode--who-can-connect) below.
 
 ## How it works
 
@@ -113,6 +115,29 @@ REACT_APP_SPOTIFY_REDIRECT_URI=http://127.0.0.1:3000/callback
 The Client ID is **not** a secret in the PKCE flow, so it's safe to expose in the browser.
 Do **not** add a client secret — it isn't used. `.env` also carries a couple of optional
 dev-speed flags (`GENERATE_SOURCEMAP=false`, `ESLINT_NO_DEV_ERRORS=true`).
+
+> ### ⚠️ Spotify Development Mode — who can connect
+>
+> New Spotify apps start in **Development Mode**, which **only allows up to 25 users that you
+> manually allow-list**. Any other Spotify account that tries to connect gets:
+>
+> ```
+> Spotify API 403: The user is not registered for this application.
+> ```
+>
+> This is a Spotify platform restriction, **not** a bug in Verseflow. To let someone connect:
+>
+> 1. Open the [Spotify Developer Dashboard](https://developer.spotify.com/dashboard) → your app.
+> 2. Go to **Settings → User Management**.
+> 3. Add each person's **name** and the **email on their Spotify account** (max 25).
+>
+> Your own developer account is allow-listed automatically.
+>
+> **Opening it to *everyone*** would require **Extended Quota Mode**. Spotify has **removed the
+> self-service request for individual / hobby apps** — there is no "Request Extension" button on
+> a personal app, and the option only surfaces for apps tied to a qualifying business that meets
+> Spotify's review and usage requirements. In practice, a personal project like Verseflow stays
+> in Development Mode and is limited to the 25 allow-listed accounts above.
 
 ### 3. Run
 
