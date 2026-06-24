@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/Verseflow/static/css/main.d0ee1175.css",
-    "main.js": "/Verseflow/static/js/main.3967d99e.js",
+    "main.css": "/Verseflow/static/css/main.56b08328.css",
+    "main.js": "/Verseflow/static/js/main.3cc1182f.js",
     "static/media/Edward.jpg": "/Verseflow/static/media/Edward.8d2774746466ab07b234.jpg",
     "static/media/Devin.png": "/Verseflow/static/media/Devin.c51ce08bfb247ba554f9.png",
     "index.html": "/Verseflow/index.html"
   },
   "entrypoints": [
-    "static/css/main.d0ee1175.css",
-    "static/js/main.3967d99e.js"
+    "static/css/main.56b08328.css",
+    "static/js/main.3cc1182f.js"
   ]
 }
