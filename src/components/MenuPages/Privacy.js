@@ -13,7 +13,6 @@ function Privacy() {
             <Navbar />
             <div className="flex flex-col text-white max-w-[760px] mx-auto px-6 pt-[12vh] pb-[14vh]">
                 <h1 className="text-3xl font-bold text-center mb-2">Privacy Policy</h1>
-                <p className={`${p} text-center`}>Last updated: June 23, 2026</p>
 
                 <p className={`${p} mt-4`}>
                     Verseflow is built to do as little with your data as possible. The app

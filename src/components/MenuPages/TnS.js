@@ -13,7 +13,6 @@ function TnS() {
             <Navbar />
             <div className="flex flex-col text-white max-w-[760px] mx-auto px-6 pt-[12vh] pb-[14vh]">
                 <h1 className="text-3xl font-bold text-center mb-2">Terms of Use</h1>
-                <p className={`${p} text-center`}>Last updated: June 23, 2026</p>
 
                 <p className={`${p} mt-4`}>
                     Welcome to Verseflow. By using the app you agree to these terms. Verseflow

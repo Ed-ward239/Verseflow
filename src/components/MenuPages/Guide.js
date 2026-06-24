@@ -43,7 +43,7 @@ function Guide() {
                 <p className={p}>
                     • Not every track has time-synced lyrics — when that happens, we show the
                     plain lyrics instead.<br />
-                    • Open the app at <code>http://localhost:3000</code> so the Spotify sign-in
+                    • Open the app at <code>https://ed-ward239.github.io/Verseflow/</code> so the Spotify sign-in
                     redirect works.<br />
                     • A Spotify Premium account gives the smoothest in-app playback.
                 </p>
