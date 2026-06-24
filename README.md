@@ -7,12 +7,13 @@ the music over generative graphics. Connect your Spotify account, search for a t
 
 > Built with React. Native **iOS & Android** apps are planned to expand the platform.
 
-## Screenshots
+## Sample Screenshots
 
 | | |
 | --- | --- |
 | ![Mixed big/small words with the word-constellation graphic](src/components/Images/Samples/sample1.png)<br/>*Mixed big/small words + word constellation* | ![Big uppercase line flanked by 90° rotated previous/next lines](src/components/Images/Samples/sample2.png)<br/>*Big type with the 90° rotated prev/next columns* |
 | ![Last word enlarged and lightened for emphasis](src/components/Images/Samples/sample3.png)<br/>*Last-word emphasis ("STAY")* | ![Lyrics cascading down from the right in increasing size](src/components/Images/Samples/sample4.png)<br/>*Stepped cascade (down from the right)* |
+### And many more animations
 
 ## Features
 
