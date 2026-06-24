@@ -3,8 +3,10 @@ import { FaSpotify } from "react-icons/fa";
 import { isLoggedIn, isConfigured, login } from "../../services/spotifyAuth";
 import { findTrack, searchTracks } from "../../services/spotifyApi";
 import { getLyrics } from "../../services/lyrics";
+import { findPreview } from "../../services/itunes";
 import { randomBillboardSong } from "../../data/billboardHot100";
 import SpotifyPlayer from "./SpotifyPlayer";
+import PreviewPlayer from "./PreviewPlayer";
 import LyricsDisplay from "./LyricsDisplay";
 
 export default function SearchMenu() {
@@ -15,6 +17,7 @@ export default function SearchMenu() {
   const [status, setStatus] = useState("");
   const [loading, setLoading] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
+  const [isPreview, setIsPreview] = useState(false);
 
   const loggedIn = isLoggedIn();
   const playing = Boolean(track);
@@ -67,18 +70,30 @@ export default function SearchMenu() {
   };
 
   const handleSurprise = async () => {
-    if (!requireLogin()) return;
     setLoading(true);
     setStatus("");
     try {
       const pick = randomBillboardSong();
-      setStatus(`Finding “${pick.title}” by ${pick.artist}…`);
-      const found = await findTrack(pick.title, pick.artist);
-      if (!found) {
-        setStatus(`Couldn't find “${pick.title}” on Spotify — try again.`);
-        return;
+      setStatus(`Finding “${pick.title}”…`);
+
+      if (loggedIn) {
+        const found = await findTrack(pick.title, pick.artist);
+        if (!found) {
+          setStatus(`Couldn't find “${pick.title}” on Spotify — try again.`);
+          return;
+        }
+        setIsPreview(false);
+        setTrack(found);
+      } else {
+        // No Spotify connected — play a free 30s preview from iTunes instead.
+        const preview = await findPreview(pick.title, pick.artist);
+        if (!preview) {
+          setStatus(`Couldn't find a preview for “${pick.title}” — try again.`);
+          return;
+        }
+        setIsPreview(true);
+        setTrack(preview);
       }
-      setTrack(found);
       setStatus("");
     } catch (err) {
       setStatus(err.message);
@@ -97,6 +112,7 @@ export default function SearchMenu() {
         setStatus(`No results for “${searchQuery}”.`);
         return;
       }
+      setIsPreview(false);
       setTrack(results[0]);
     } catch (err) {
       setStatus(err.message);
@@ -112,10 +128,10 @@ export default function SearchMenu() {
 
   // --- Render --------------------------------------------------------------
   const btnBase =
-    "text-white bg-[rgba(128,128,128,0.315)] px-5 h-[2.3rem] rounded-2xl border-none m-8 cursor-pointer disabled:opacity-50 disabled:cursor-default";
+    "text-white bg-[rgba(128,128,128,0.315)] px-5 h-[2.3rem] rounded-2xl border-none mx-8 my-4 cursor-pointer disabled:opacity-50 disabled:cursor-default";
 
   const controls = (
-    <div className="flex flex-col items-center w-100%">
+    <div className="flex flex-col items-center w-full max-w-[600px] mx-auto">
       <input
         className="bg-[rgba(128,128,128,0.315)] w-full h-[2.3rem] rounded-2xl border-none text-white pl-[14px] placeholder:text-white/[.466]"
         type="text"
@@ -126,7 +142,7 @@ export default function SearchMenu() {
       />
       <div className="flex">
         <button className={btnBase} onClick={handleSurprise} disabled={loading}>
-          {loading ? "Loading…" : "Surprise ME!"}
+          {loading ? "Loading…" : "Surprise Me!"}
         </button>
         {!loggedIn && (
           <button
@@ -143,23 +159,34 @@ export default function SearchMenu() {
 
   if (!playing) {
     return (
-      <div className="mt-[19vh] flex flex-col min-h-[60vh] justify-center items-center">
+      <div className="h-full flex flex-col justify-center items-center px-4">
         {controls}
       </div>
     );
   }
 
   return (
-    <div className="relative z-[1] flex flex-col min-h-screen pt-4 px-4 pb-8 box-border">
-      <div className="flex-none pt-[12vh]">{controls}</div>
+    <div className="relative z-[1] flex flex-col h-full pt-[2vh] px-4 pb-[9vh] box-border">
+      <div className="flex-none">{controls}</div>
+
+      {isPreview && (
+        <div className="flex-none mx-auto mt-2 w-full max-w-[640px]">
+          <div className="flex items-center justify-center gap-2 text-center text-amber-200 bg-amber-500/15 border border-amber-400/30 rounded-xl px-4 py-2 text-sm">
+            <span>Please connect to your Spotify Premium to get the full animated lyrics experience.</span>
+            <button onClick={handleConnect} className="underline whitespace-nowrap hover:text-white">Connect</button>
+          </div>
+        </div>
+      )}
+
       <div className="flex-1 flex items-center justify-center min-h-0">
-        <LyricsDisplay lyrics={lyrics} currentTime={currentTime} loading={lyricsLoading} />
+        <LyricsDisplay lyrics={lyrics} currentTime={currentTime} loading={lyricsLoading} plain={isPreview} />
       </div>
       <div className="flex-none flex flex-col items-center gap-2">
-        <div className="text-white font-semibold text-center">
-          {track.title} — {track.artist}
-        </div>
-        <SpotifyPlayer track={track} onProgress={handleProgress} />
+        {isPreview ? (
+          <PreviewPlayer track={track} onProgress={handleProgress} />
+        ) : (
+          <SpotifyPlayer track={track} onProgress={handleProgress} />
+        )}
       </div>
     </div>
   );

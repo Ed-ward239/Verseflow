@@ -37,7 +37,7 @@ function CntSpotify() {
                 ) : (
                     <>
                         <h1>Spotify isn't set up yet</h1>
-                        <p>To enable sign-in, add your Spotify <strong>Client ID</strong> to <code>lyrical/.env</code>:</p>
+                        <p>To enable sign-in, add your Spotify <strong>Client ID</strong> to <code>.env</code>:</p>
                         <pre className="inline-block text-left bg-[#111] p-4 rounded-lg">
 {`REACT_APP_SPOTIFY_CLIENT_ID=your_id_here`}
                         </pre>

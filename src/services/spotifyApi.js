@@ -31,6 +31,22 @@ export async function searchTracks(query, limit = 20) {
   return (data.tracks?.items || []).map(normalizeTrack);
 }
 
+// Start playback of the given track URIs on a specific device (our Web Playback
+// SDK player). Requires the user-modify-playback-state scope + Spotify Premium.
+export async function playOnDevice(uris, deviceId) {
+  const token = await getAccessToken();
+  const res = await fetch(`${BASE}/me/player/play?device_id=${encodeURIComponent(deviceId)}`, {
+    method: "PUT",
+    headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+    body: JSON.stringify({ uris }),
+  });
+  if (!res.ok) {
+    if (res.status === 403) throw new Error("Spotify Premium is required for in-app playback.");
+    if (res.status === 404) throw new Error("Player not ready yet — try again in a moment.");
+    throw new Error(`Spotify play ${res.status}: ${await res.text()}`);
+  }
+}
+
 function normalizeTrack(t) {
   return {
     id: t.id,

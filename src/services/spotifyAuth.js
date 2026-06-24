@@ -2,8 +2,7 @@
 // Docs: https://developer.spotify.com/documentation/web-api/tutorials/code-pkce-flow
 
 const CLIENT_ID = process.env.REACT_APP_SPOTIFY_CLIENT_ID;
-const REDIRECT_URI =
-  process.env.REACT_APP_SPOTIFY_REDIRECT_URI || "http://127.0.0.1:3000/callback";
+const REDIRECT_URI = process.env.REACT_APP_SPOTIFY_REDIRECT_URI || "http://127.0.0.1:3000/callback";
 
 // Scopes: basic profile now; playback scopes included so we can add the
 // Web Playback SDK later without forcing the user to re-authorize.
@@ -54,7 +53,7 @@ function base64url(buffer) {
 export async function login() {
   if (!CLIENT_ID) {
     throw new Error(
-      "Missing REACT_APP_SPOTIFY_CLIENT_ID. Add it to lyrical/.env and restart `npm start`."
+      "Missing REACT_APP_SPOTIFY_CLIENT_ID. Add it to .env and restart `npm start`."
     );
   }
   const verifier = randomString(64);

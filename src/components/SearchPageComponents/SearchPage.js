@@ -11,9 +11,13 @@ function SearchPage() {
   return (
     <>
         <Particle />
-        <Navbar />
-        <SearchMenu />
         <Footer />
+        <div className="flex flex-col h-[100dvh] overflow-hidden">
+            <Navbar />
+            <div className="flex-1 min-h-0">
+                <SearchMenu />
+            </div>
+        </div>
     </>
 )
 }

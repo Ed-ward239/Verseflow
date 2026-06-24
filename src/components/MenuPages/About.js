@@ -35,7 +35,7 @@ function About() {
             <div className='flex flex-col justify-center items-center text-center text-white max-w-[700px] mx-auto my-2 px-6'>
             <h3>We are fresh college graduates with a passion for music and animation.</h3>
             <p className="my-[0.85rem] leading-[1.55] text-[1.05rem]">
-                Lyrical.ly began with a simple question: what if your favorite songs
+                Verseflow began with a simple question: what if your favorite songs
                 could light up the screen the way they light up your ears? Inspired by
                 Lyric Speaker boxes, we set out to turn lyrics into living, breathing
                 visuals that move in time with the music.

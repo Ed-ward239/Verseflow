@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -20,7 +21,106 @@
   }
 }
 
+/* Hide scrollbars on any element (e.g. plain-lyrics list). */
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+
 /* Typewriter cursor stays invisible (was a global rule in MainBody.css). */
 .Typewriter__cursor {
   color: transparent;
+}
+
+/* ------------------------------------------------------------------ */
+/* COTODAMA-style kinetic lyrics ("Lyric Speaker" look)               */
+/* ------------------------------------------------------------------ */
+
+/* Elegant serif used by half the lyric templates (COTODAMA look). */
+.vf-serif { font-family: 'Playfair Display', Georgia, 'Noto Serif SC', 'Songti SC', serif; }
+
+/* Vertical text (image 1: stacked / rotated lines). */
+.vf-vertical { writing-mode: vertical-rl; text-orientation: mixed; }
+
+/* Per-character entrance: blur + rise + fade-in, replayed on each line. */
+@keyframes vf-char-in {
+  0%   { opacity: 0; transform: translateY(0.6em) scale(0.92); filter: blur(10px); }
+  60%  { opacity: 1; filter: blur(0); }
+  100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+}
+.vf-char {
+  display: inline-block;
+  white-space: pre;
+  opacity: 0;
+  animation: vf-char-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* The active line breathes gently so it never feels static. */
+@keyframes vf-line-float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-8px); }
+}
+.vf-line { animation: vf-line-float 6s ease-in-out infinite; }
+
+/* Upcoming line fades up into place. */
+@keyframes vf-next-in {
+  0%   { opacity: 0; transform: translateY(14px); }
+  100% { opacity: 0.45; transform: translateY(0); }
+}
+.vf-next { animation: vf-next-in 0.8s ease forwards; }
+
+/* Abstract background graphics. */
+@keyframes vf-spin      { to { transform: rotate(360deg); } }
+@keyframes vf-spin-rev  { to { transform: rotate(-360deg); } }
+@keyframes vf-glow {
+  0%, 100% { opacity: 0.18; transform: scale(1); }
+  50%      { opacity: 0.4;  transform: scale(1.12); }
+}
+@keyframes vf-drift {
+  0%   { transform: translateX(-6%); }
+  100% { transform: translateX(6%); }
+}
+/* A ring that pulses out once whenever the line changes. */
+@keyframes vf-pulse-ring {
+  0%   { opacity: 0.5; transform: scale(0.6); }
+  100% { opacity: 0;   transform: scale(1.8); }
+}
+.vf-pulse-ring { animation: vf-pulse-ring 1.6s ease-out forwards; }
+
+/* Whole-line entrance variants (chosen per template). */
+@keyframes vf-slide-l { 0% { opacity: 0; transform: translateX(-14%); } 100% { opacity: 1; transform: none; } }
+@keyframes vf-slide-r { 0% { opacity: 0; transform: translateX(14%); }  100% { opacity: 1; transform: none; } }
+@keyframes vf-pop     { 0% { opacity: 0; transform: scale(0.55); } 70% { opacity: 1; transform: scale(1.06); } 100% { transform: scale(1); } }
+.vf-slide-l { animation: vf-slide-l 0.7s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.vf-slide-r { animation: vf-slide-r 0.7s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.vf-pop     { animation: vf-pop 0.65s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+/* A line rotating into the vertical "previous" position as the song advances. */
+@keyframes vf-rot-out {
+  0%   { opacity: 0;    transform: rotate(0deg); }
+  100% { opacity: 0.32; transform: rotate(-90deg); }
+}
+.vf-rot { animation: vf-rot-out 0.85s cubic-bezier(0.22, 1, 0.36, 1) both; transform-origin: center; }
+
+/* Faint upcoming line easing in. */
+@keyframes vf-up { 0% { opacity: 0; transform: translateY(10px); } 100% { opacity: 0.32; transform: none; } }
+.vf-up { animation: vf-up 0.7s ease forwards; }
+
+/* Spinning "/" <-> "\" cursor for the typewriter template. */
+@keyframes vf-cur-a { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+@keyframes vf-cur-b { 0%, 49% { opacity: 0; } 50%, 100% { opacity: 1; } }
+.vf-cur { position: relative; display: inline-block; font-weight: 400; opacity: 0.85; }
+.vf-cur .a { animation: vf-cur-a 0.5s steps(1) infinite; }
+.vf-cur .b { position: absolute; left: 0; top: 0; animation: vf-cur-b 0.5s steps(1) infinite; }
+
+/* Drifting background lines for extra graphic movement. */
+@keyframes vf-drift-a { 0%, 100% { transform: translateX(-7%); } 50% { transform: translateX(7%); } }
+@keyframes vf-drift-b { 0%, 100% { transform: translateX(6%); }  50% { transform: translateX(-6%); } }
+.vf-drift-a { animation: vf-drift-a 14s ease-in-out infinite; }
+.vf-drift-b { animation: vf-drift-b 18s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .vf-char, .vf-line, .vf-pulse-ring, .vf-slide-l, .vf-slide-r, .vf-pop,
+  .vf-drift-a, .vf-drift-b, .vf-up { animation: none !important; opacity: 1 !important; }
+  .vf-rot { animation: none !important; opacity: 0.32 !important; transform: rotate(-90deg) !important; }
+  .vf-cur .a, .vf-cur .b { animation: none !important; }
+  .vf-cur .b { opacity: 0 !important; }
 }

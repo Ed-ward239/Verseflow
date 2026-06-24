@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FaSpotify } from "react-icons/fa";
 import Hamburger from "hamburger-react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { login, logout, isConfigured, isLoggedIn } from '../services/spotifyAuth';
 
 export default function Navbar() {
@@ -10,22 +10,6 @@ export default function Navbar() {
   function handleClick(event) {
     event.preventDefault();
     navigate('/');
-  }
-  function clickAbout(event) {
-    event.preventDefault();
-    navigate('/About');
-  }
-  function clickGuide(event) {
-    event.preventDefault();
-    navigate('/Guide');
-  }
-  function clickPrivacy(event) {
-    event.preventDefault();
-    navigate('/Privacy');
-  }
-  function clickTnS(event) {
-    event.preventDefault();
-    navigate('/TnS');
   }
   // Reflect Spotify connection state so the button never silently disappears.
   const [loggedIn, setLoggedIn] = useState(isLoggedIn());
@@ -62,12 +46,12 @@ export default function Navbar() {
         className="font-bold text-white cursor-pointer text-[2rem] p-12"
         onClick={handleClick}
       >
-        Lyrical.ly
+        Verseflow
       </div>
       <div className="flex flex-row items-center mr-[30px]">
         <div
           className={
-            "flex absolute right-[3%] w-[800px] p-[10px] rounded-[5px] " +
+            "flex items-center gap-4 absolute right-[3%] w-[800px] p-[10px] rounded-[5px] " +
             "shadow-[0_0_10px_rgba(0,0,0,0.2)] transition-all duration-300 " +
             "max-[400px]:flex-col max-[400px]:left-1/2 max-[400px]:w-1/2 " +
             (isMenuOpen
@@ -75,22 +59,27 @@ export default function Navbar() {
               : "opacity-0 invisible translate-x-[90px]")
           }
         >
-          <a href="#" onClick={clickAbout} className={linkClass}>Who We Are</a>
-          <a href="#" onClick={clickGuide} className={linkClass}>Guide</a>
-          <a href="#" onClick={clickPrivacy} className={linkClass}>Privacy Policy</a>
-          <a href="#" onClick={clickTnS} className={linkClass}>Terms of Use</a>
+          <Link to="/About" className={linkClass}>Who We Are</Link>
+          <Link to="/Guide" className={linkClass}>Guide</Link>
+          <Link to="/Privacy" className={linkClass}>Privacy Policy</Link>
+          <Link to="/TnS" className={linkClass}>Terms of Use</Link>
           <button
             onClick={clickCntSpotify}
-            className="bg-spotify text-white border-none rounded-2xl py-[5px] px-[10px] text-base cursor-pointer flex justify-center items-center mr-8 transition-transform hover:scale-110"
+            className="bg-spotify text-white border-none rounded-2xl py-[5px] px-[10px] text-base cursor-pointer flex justify-center items-center transition-transform hover:scale-110"
           >
             {loggedIn ? "Disconnect" : "Connect"}
             <FaSpotify className="ml-2" />
           </button>
         </div>
 
-        <a href="#" onClick={toggleMenu}>
+        <button
+          type="button"
+          onClick={toggleMenu}
+          aria-label="Toggle menu"
+          className="bg-transparent border-none p-0 cursor-pointer"
+        >
           <Hamburger direction="left" color="white" rounded toggled={isOpen} toggle={setOpen} />
-        </a>
+        </button>
       </div>
     </nav>
   );

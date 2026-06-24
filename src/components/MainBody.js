@@ -51,7 +51,7 @@ export default function MainBody() {
           className="mt-[5.4rem] py-[5px] px-[30px] text-[2rem] border border-white rounded text-white bg-transparent cursor-pointer flex items-center justify-center relative z-[1] transition-all duration-200 hover:bg-white/50 hover:text-black max-[400px]:text-[0.7rem] max-[400px]:m-0"
           onClick={SearchClick}
         >
-          Let's get started<HiArrowRight className="p-4" />
+          Let's get started<HiArrowRight className="p-4" style={{ color: "#fff" }} />
         </button>
       </div>
     </div>
