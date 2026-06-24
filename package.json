@@ -2,7 +2,7 @@
   "name": "verseflow",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://ed-ward239.github.io/Lyrical.ly",
+  "homepage": "https://ed-ward239.github.io/Verseflow",
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.4.0",
     "@fortawesome/free-brands-svg-icons": "^6.4.0",
