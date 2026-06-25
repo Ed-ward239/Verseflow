@@ -1,4 +1,4 @@
-# Verseflow
+# <img src="src/components/Images/Logo.png" alt="Verseflow logo" height="40" align="center" /> Verseflow
 
 A web app inspired by [Lyric Speaker / COTODAMA](https://lyric-speaker.com/) boxes that turns
 any song into a **kinetic lyric stage** — words animate in, shift position, tilt, and react to
